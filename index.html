@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think of a Number</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+            color: #ffffff;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            width: 350px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin: 15px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #222;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1e90ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1c86ee;
+        }
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #444;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #1e90ff;
+            border-radius: 5px;
+            transition: width 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Think of a Number</h1>
+        <p>Think of a number and enter it below:</p>
+        <input type="text" id="numberInput" placeholder="Enter a number">
+        <button onclick="onSubmit()">Submit</button>
+
+        <div class="loading" id="loading">
+            <p id="loadingText">Calculating brainwaves...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onSubmit() {
+            const number = document.getElementById('numberInput').value;
+            if (isNaN(number) || number === '') {
+                alert('Please enter a valid number.');
+                return;
+            }
+
+            document.getElementById('numberInput').style.display = 'none';
+            document.querySelector('button').style.display = 'none';
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                document.getElementById('progressBar').style.width = progress + '%';
+
+                if (progress === 50) {
+                    document.getElementById('loadingText').textContent = 'Scanning past memories...';
+                }
+
+                if (progress    === 100) {
+                    clearInterval(interval);
+                    loading.style.display = 'none';
+                    alert(`The number you thought of is: ${number}`);
+                    document.getElementById('numberInput').style.display = 'block';
+                    document.querySelector('button').style.display = 'block';
+                    document.getElementById('numberInput').value = '';
+                }
+            }, 20);
+        }
+    </script>
+</body>
+</html>
